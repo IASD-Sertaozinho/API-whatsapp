@@ -5,11 +5,6 @@
 - Python - Flask
 - Java - Spring Boot
 
-### Blog
-- Typescript- Reactjs
-- TailwindCSS
-
-
 ## Banco de Dados
 - Postgresql
 
@@ -19,7 +14,6 @@
 - Microservicos que conversao entre si
 - Docker Docker-compose
 - Ngnixt
-- 
 
 ## Servidor
 ###### - *A ideia eh utilizar um servidor local Linux para hospedar todos os servicos a serem desenvolvidos*
