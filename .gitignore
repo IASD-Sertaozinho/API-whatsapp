@@ -1,2 +1,4 @@
 .ignore
 .obsidian
+node_modules
+.build
