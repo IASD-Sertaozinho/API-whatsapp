@@ -13,4 +13,8 @@ export default class Hash {
         const decipher = createDecipheriv("aes-256-gcm", pass, iv);
         return decipher.update(message, "utf-8", "base64");
     }
+    compare(message: string, messageToCompare: string): boolean {
+        const decipher = this.desencrypt(message);
+        return decipher === messageToCompare;
+    }
 }
