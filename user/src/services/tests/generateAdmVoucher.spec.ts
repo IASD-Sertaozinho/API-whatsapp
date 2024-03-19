@@ -48,7 +48,6 @@ describe("GenerateAdmVoucher", () => {
             name: "John Doe",
             message: Message.COMUM,
         });
-        console.log("here");
         const response = await generateAdmVoucher.execute({ adminNumber: adm_phone_number, newAdminNumber: "1234567890" });
         expect(typeof response).toBe("string");
     });
