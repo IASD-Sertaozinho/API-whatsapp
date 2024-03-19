@@ -1,20 +1,16 @@
+import WrongPasswordError from "../errors/WrongPassword";
 import { AdminRepository } from "../repositories/admRepository";
-// import { UsersRepository } from "../repositories/usersRepository";
 import Hash from "../utils/Hash";
 
-interface authenticateAdminRequest {
-    number: string;
-    password: string;
-}
 
-export default class authenticateAdm {
+
+export default class AuthenticateAdm {
     constructor(
-        // private usersRepository: UsersRepository,
         private adminRepository: AdminRepository,
-        private hashFunctions: Hash
-    ) {}
+        private hashFunctions: Hash,
+    ) { }
 
-    async execute(data: authenticateAdminRequest) {
+    async execute(data: authenticateAdminRequestDTO) {
         const user = await this.adminRepository.findByUserNumber(data.number);
         if (!user) {
             throw new Error("User not found");
@@ -23,8 +19,10 @@ export default class authenticateAdm {
             data.password,
             user.password
         );
+        console.log(data.password, this.hashFunctions.desencrypt(user.password), isAdmin);
+
         if (!isAdmin) {
-            throw new Error("Wrong password");
+            throw new WrongPasswordError("Wrong password");
         }
         return user;
     }
