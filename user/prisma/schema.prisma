@@ -14,17 +14,18 @@ datasource db {
 }
 
 model User {
-    cel     String  @id @unique
+    id      String  @id @default(uuid())
+    cel     String  @unique
     name    String
     message Message
-    Admin   Admin[]
+    Admin   Admin?
 }
 
 model Admin {
-    username String @id @unique
+    id       String @id @default(uuid())
     password String
     user     User   @relation(fields: [userCel], references: [cel])
-    userCel  String
+    userCel  String @unique
 }
 
 enum Message {
