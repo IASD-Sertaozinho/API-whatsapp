@@ -1,27 +1,28 @@
-import { createCipheriv, createDecipheriv, randomBytes } from "node:crypto";
-
-// let pass: Buffer;
-// let iv: Buffer;
-// Must be gen when the application starts.
+import { createCipheriv, createDecipheriv } from "node:crypto";
+import { Buffer } from "node:buffer";
 
 export default class Hash {
-    private pass: Buffer;
+    private key: Buffer;
     private iv: Buffer;
     constructor(start_pass: Buffer, start_iv: Buffer) {
-        this.pass = start_pass;
+        this.key = start_pass;
         this.iv = start_iv;
     }
-    //Maybe need a refactor...
-    encrypt(message: string): string {
-        const encrypt = createCipheriv("aes-256-gcm", this.pass, this.iv);
-        return encrypt.update(message, "utf-8", "base64");
+    encrypt(text: string) {
+        const cipher = createCipheriv("aes-256-cbc", this.key, this.iv);
+        let encrypted = cipher.update(text, "utf8", "hex");
+        encrypted += cipher.final("hex");
+        return encrypted;
     }
-    desencrypt(message: string): string {
-        const decipher = createDecipheriv("aes-256-gcm", this.pass, this.iv);
-        return decipher.update(message, "utf-8", "base64");
+
+    decrypt(encryptedText: string) {
+        const decipher = createDecipheriv("aes-256-cbc", this.key, this.iv);
+        let decrypted = decipher.update(encryptedText, "hex", "utf8");
+        decrypted += decipher.final("utf8");
+        return decrypted;
     }
-    compare(message: string, messageToCompare: string): boolean {
-        const decipher = this.desencrypt(message);
-        return decipher === messageToCompare;
+
+    compare(plainText: string, encryptedText: string) {
+        return this.encrypt(plainText) === encryptedText;
     }
 }
