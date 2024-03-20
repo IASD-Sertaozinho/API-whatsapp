@@ -10,18 +10,18 @@ export default class AuthenticateAdm {
     ) {}
 
     async execute(data: authenticateAdminRequestDTO) {
-        const user = await this.adminRepository.findByUserNumber(data.number);
-        if (!user) {
+        const admin = await this.adminRepository.findByUserNumber(data.number);
+        if (!admin) {
             throw new UserDidntExists("User not found");
         }
         const isAdmin = this.hashFunctions.compare(
             data.password,
-            user.password
+            admin.password
         );
 
         if (!isAdmin) {
             throw new WrongPasswordError("Wrong password");
         }
-        return user;
+        return admin;
     }
 }
