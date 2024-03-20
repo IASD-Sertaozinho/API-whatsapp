@@ -1,6 +1,5 @@
 import RegisterAdministratorRequestDTO from "../dto/registerAdmRequestDTO";
 import InvalidVoucherError from "../errors/InvalidVoucher";
-import { UserAlreadyIsAnAdministrator } from "../errors/UserAlreadyIsAnAdministrator";
 import { UserDidntExists } from "../errors/UserDidntExists";
 import { AdminRepository } from "../repositories/admRepository";
 import { CacheRepository } from "../repositories/cacheRepository";
@@ -13,7 +12,7 @@ export default class registerAdm {
         private adminRepository: AdminRepository,
         private cacheRepository: CacheRepository,
         private hashFunctions: Hash
-    ) { }
+    ) {}
 
     async execute(data: RegisterAdministratorRequestDTO) {
         const user = await this.usersRepository.findByCel(data.cel);
