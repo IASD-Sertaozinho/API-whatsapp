@@ -8,10 +8,35 @@ TEXT_BODY_CLASS = "mdl-card__supporting-text"
 IMAGE_CLASS = "mdl-card__media"
 
 class GetMeditationFromWeb:
+    """
+    A class that retrieves meditation content from a given URL.
+
+    Attributes:
+        None
+
+    Methods:
+        execute(url: str) -> dict: Retrieves the meditation content from the provided URL.
+
+    """
+
     def __init__(self):
         pass
 
     def execute(self, url: str):
+        """
+        Retrieves the meditation content from the provided URL.
+
+        Args:
+            url (str): The URL to fetch the meditation content from.
+
+        Returns:
+            dict: A dictionary containing the title, body, and image link of the meditation content.
+
+        Raises:
+            ValueError: If the URL is invalid or any of the required elements are missing.
+
+        """
+
         response = requests.get(url)
         html_content = response.text
 
@@ -26,7 +51,6 @@ class GetMeditationFromWeb:
 
         # Extract Image
         image = soup.find('div', class_=IMAGE_CLASS)
-
 
         if(image is None or text_title is None or text_body is None):
             raise ValueError("Invalid URL")
