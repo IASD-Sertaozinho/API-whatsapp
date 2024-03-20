@@ -48,25 +48,37 @@ describe("GenerateAdmVoucher", () => {
             name: "John Doe",
             message: Message.COMUM,
         });
-        const response = await generateAdmVoucher.execute({ adminNumber: adm_phone_number, newAdminNumber: "1234567890" });
+        const response = await generateAdmVoucher.execute({
+            adminNumber: adm_phone_number,
+            newAdminNumber: "1234567890",
+        });
         expect(typeof response).toBe("string");
     });
 
     it("should not generate a new admin voucher for an user that doesn't exists", async () => {
         expect(async () => {
-            await generateAdmVoucher.execute({ adminNumber: adm_phone_number, newAdminNumber: "1234123123" });
+            await generateAdmVoucher.execute({
+                adminNumber: adm_phone_number,
+                newAdminNumber: "1234123123",
+            });
         }).rejects.toBeInstanceOf(UserDidntExists);
     });
 
     it("should not generate a new admin voucher for an user that is already an admin", async () => {
         expect(async () => {
-            await generateAdmVoucher.execute({ adminNumber: adm_phone_number, newAdminNumber: adm_phone_number });
+            await generateAdmVoucher.execute({
+                adminNumber: adm_phone_number,
+                newAdminNumber: adm_phone_number,
+            });
         }).rejects.toBeInstanceOf(UserAlreadyIsAnAdministrator);
     });
 
     it("should not generate a new admin voucher as a User that is not an admin", async () => {
         expect(async () => {
-            await generateAdmVoucher.execute({ adminNumber: "12345678912", newAdminNumber: "1234567893" });
-        }).rejects.toBeInstanceOf(UserIsntAnAdminError)
+            await generateAdmVoucher.execute({
+                adminNumber: "12345678912",
+                newAdminNumber: "1234567893",
+            });
+        }).rejects.toBeInstanceOf(UserIsntAnAdminError);
     });
 });
