@@ -1,6 +1,10 @@
+from datetime import datetime
 import re
 from bs4 import BeautifulSoup
 import requests
+
+
+from daily_meditation.src.models.daily_meditation import DailyMeditation
 
 # Css class
 TEXT_TITLE_CLASS = "mdl-card__title-text"
@@ -8,19 +12,6 @@ TEXT_BODY_CLASS = "mdl-card__supporting-text"
 IMAGE_CLASS = "mdl-card__media"
 
 class GetMeditationFromWeb:
-    """
-    A class that retrieves meditation content from a given URL.
-
-    Attributes:
-        None
-
-    Methods:
-        execute(url: str) -> dict: Retrieves the meditation content from the provided URL.
-
-    """
-
-    def __init__(self):
-        pass
 
     def execute(self, url: str):
         """
@@ -63,9 +54,8 @@ class GetMeditationFromWeb:
         # If any of the elements are missing, raise an error
         if(image is None or text_title is None or text_body is None):
             raise ValueError("Invalid URL")
+        
+        meditation = DailyMeditation(text_title.get_text(), image_link, text_body.get_text().strip(), datetime.today().strftime('%Y-%m-%d'))
 
-        return {
-            "title": text_title.get_text(),
-            "body": text_body.get_text().strip(),
-            "image": image_link
-        }
+
+        return meditation
