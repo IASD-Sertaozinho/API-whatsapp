@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "fastify": "^4.26.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.3"
+  }
+}
