@@ -1,0 +1,53 @@
+
+    [
+        {
+            "weekday": "Monday",
+            "title": "The title of the meditation",
+            "content": "The content of the meditation",
+            "image": "The image of the meditation",
+            "meditation": "Mulher"
+        },
+        {
+            "weekday": "Tuesday",
+            "title": "The title of the meditation",
+            "content": "The content of the meditation",
+            "image": "The image of the meditation",
+            "meditation": "Mulher"
+        },
+        {
+            "weekday": "Wednesday",
+            "title": "The title of the meditation",
+            "content": "The content of the meditation",
+            "image": "The image of the meditation",
+            "meditation": "Mulher"
+        },
+        {
+            "weekday": "Thursday",
+            "title": "The title of the meditation",
+            "content": "The content of the meditation",
+            "image": "The image of the meditation",
+            "meditation": "Mulher"
+        },
+        {
+            "weekday": "Friday",
+            "title": "The title of the meditation",
+            "content": "The content of the meditation",
+            "image": "The image of the meditation",
+            "meditation": "Mulher"
+        },
+        {
+            "weekday": "Saturday",
+            "title": "The title of the meditation",
+            "content": "The content of the meditation",
+            "image": "The image of the meditation",
+            "meditation": "Mulher"
+        },
+        {
+            "weekday": "Sunday",
+            "title": "The title of the meditation",
+            "content": "The content of the meditation",
+            "image": "The image of the meditation",
+            "meditation": "Mulher"
+        }
+    
+    ]
