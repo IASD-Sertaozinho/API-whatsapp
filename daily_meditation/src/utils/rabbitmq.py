@@ -1,13 +1,14 @@
 import pika
 
-
-class Rabbitmq():
+# TODO: Refactor this class - the producer and consumer should be separated
+class Rabbitmq:
     def __init__(self, callback):
         self.__host = "localhost"
         self.__port = 5672
         self.__username = "guest"
         self.__password = "guest"
-        self.__queue = "data"
+        self.__consumer_queue = "data"
+        self.__producer_queue = "data"
         self.__callback = callback
         self.__channel = self.create_channel()
 
@@ -22,11 +23,11 @@ class Rabbitmq():
 
     def consuming(self):
         self.__channel.queue_declare(
-            queue=self.__queue,
+            queue=self.__consumer_queue,
             durable=True
         )
         self.__channel.basic_consume(
-            queue=self.__queue,
+            queue=self.__consumer_queue,
             auto_ack=True,
             on_message_callback=self.__callback
         )
@@ -36,7 +37,7 @@ class Rabbitmq():
     def publish(self, message):
         self.__channel.basic_publish(
             exchange="",
-            routing_key=self.__queue,
+            routing_key=self.__producer_queue,
             body=message,
             properties=pika.BasicProperties(delivery_mode=2)
         )

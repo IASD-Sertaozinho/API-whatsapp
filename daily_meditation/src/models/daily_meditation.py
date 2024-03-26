@@ -5,5 +5,6 @@ class DailyMeditation:
         self.title = title
         self.image = image
         self.content = content
-        self.date = date # YYYY-MM-DD
-        
+        self.weekDay= str # YYYY-MM-DD
+    def __str__(self):
+        return f"Title: {self.title}\nImage: {self.image}\nContent: {self.content}\nWeekDay: {self.weekDay}"

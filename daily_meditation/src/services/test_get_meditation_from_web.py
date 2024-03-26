@@ -13,7 +13,7 @@ class TestGetMeditationFromWeb(unittest.TestCase):
         self.assertIsInstance(result.title, str)
         self.assertIsInstance(result.image, str)
         self.assertIsInstance(result.content, str)
-        self.assertIsInstance(result.date, str)
+        self.assertIsInstance(result.weekDay, str)
 
     def test_should_not_be_able_to_get_meditation_from_wrong_url(self):
         # Given

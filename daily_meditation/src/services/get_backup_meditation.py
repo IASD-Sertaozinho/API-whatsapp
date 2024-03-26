@@ -12,13 +12,19 @@ The backup should be a json file that contains the following structure:
     ...
 ]
 """
-
+import calendar
+from datetime import datetime
 import json
+
+from models.daily_meditation import DailyMeditation
 
 
 def get_backup(backup_url: str, weekday: str):
-    with open(backup_url, "r") as file:
-        backup = json.load(file)
+    try:
+        with open(backup_url, "r") as file:
+            backup = json.load(file)
+    except FileNotFoundError:
+        raise Exception("Backup file not found")
     data = filter_by_weekday(backup, weekday)
     if not data:
         raise Exception("No data found")
@@ -31,8 +37,11 @@ def filter_by_weekday(file, weekday: str):
 
 
 class GetBackupMeditation:
-    def __init__(self, backup_url: str, weekday: str):
-        self.backup = get_backup(backup_url, weekday)
+    def __init__(self, backup_url: str):
+        day_week = datetime.today().weekday()
+        name_day_week = calendar.day_name[day_week]
+        self.weekday = name_day_week
+        self.backup = get_backup(backup_url, self.weekday)
 
     def get_weekday(self):
         return self.backup["weekday"]
@@ -48,3 +57,6 @@ class GetBackupMeditation:
 
     def get_meditation(self):
         return self.backup["meditation"]
+    
+    def get_message(self) -> DailyMeditation:
+        return DailyMeditation(self.get_title(), self.get_image(), self.get_content(), datetime.today().strftime('%Y-%m-%d'))
