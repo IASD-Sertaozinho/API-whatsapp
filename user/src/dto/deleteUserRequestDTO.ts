@@ -1,0 +1,3 @@
+interface deleteUserRequestDTO {
+    number: string;
+}
