@@ -1,4 +1,4 @@
-# Node Application Status
+# User Application Status
 
 This document outlines the current status of the Node application and describes the components and functionalities it comprises.
 
