@@ -1,0 +1,24 @@
+# Application Status
+
+## Overall
+Build an Application to receive logs from other services.
+
+### Error Logs
+To identify error logs, you can use a regular expression or a specific log parsing library to search for patterns that indicate errors
+
+## Create weekly reports
+To analyse this logs, some tool is needed to be more visual. (PDF? CSV? DASHBOARD?)
+
+## Maintain the logs in db from 1 mouth at lest
+Need to keep the files for a certain period of time to analyze the entire process and identify where the error starts
+
+## Tecnologies
+### Language
+ Go
+### DataBase
+#### SQL?
+ Postgresql
+#### NoSQL?
+ Apache Cassandra
+ MongoDB
+ Elasticsearch
