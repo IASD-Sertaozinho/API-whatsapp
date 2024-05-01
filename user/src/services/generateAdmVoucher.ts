@@ -11,7 +11,7 @@ interface generateAdmVoucher {
     adminNumber: string;
 }
 
-export class GenerateAdmVoucher {
+export class GenerateAdmVoucherService {
     constructor(
         private usersRepository: UsersRepository,
         private adminRepository: AdminRepository,
@@ -52,6 +52,6 @@ export class GenerateAdmVoucher {
             voucher[0],
             setTimeout
         );
-        return voucher[0];
+        return { status: 200, send: voucher[0] };
     }
 }

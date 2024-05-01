@@ -2,6 +2,7 @@ import { randomUUID } from "crypto";
 import { User } from "../../models/User";
 import { UsersRepository } from "../usersRepository";
 import { RegisterUserRequestDTO } from "../../dto/registerUserRequestDTO";
+import { UpdateUserRequestDTO } from "../../dto/updateUserRequestDTO";
 
 export default class InMemoryUsersRepository implements UsersRepository {
     public items: User[];
@@ -18,7 +19,7 @@ export default class InMemoryUsersRepository implements UsersRepository {
         this.items.splice(index, 1);
     }
 
-    async update(id: string, data: RegisterUserRequestDTO): Promise<User> {
+    async update(id: string, data: UpdateUserRequestDTO): Promise<User> {
         const index = this.items.findIndex((item) => item.id === id);
         this.items[index] = {
             ...this.items[index],
@@ -41,11 +42,11 @@ export default class InMemoryUsersRepository implements UsersRepository {
         return object;
     }
 
-    async findById(id: string): Promise<User | undefined> {
-        return this.items.find((item) => item.id === id);
+    async findById(id: string): Promise<User | null> {
+        return this.items.find((item) => item.id === id) || null;
     }
 
-    async findByCel(cel: string): Promise<User | undefined> {
-        return this.items.find((item) => item.cel === cel);
+    async findByCel(cel: string): Promise<User | null> {
+        return this.items.find((item) => item.cel === cel) || null;
     }
 }

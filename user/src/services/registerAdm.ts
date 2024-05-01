@@ -6,7 +6,7 @@ import { CacheRepository } from "../repositories/cacheRepository";
 import { UsersRepository } from "../repositories/usersRepository";
 import Hash from "../utils/Hash";
 
-export default class registerAdm {
+export default class RegisterAdmService {
     constructor(
         private usersRepository: UsersRepository,
         private adminRepository: AdminRepository,
@@ -28,6 +28,6 @@ export default class registerAdm {
             password: this.hashFunctions.encrypt(data.password),
             cel: data.cel,
         });
-        return newAdmin;
+        return { status: 201, send: newAdmin };
     }
 }

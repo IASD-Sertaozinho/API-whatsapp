@@ -1,22 +1,23 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { UsersRepository } from "../../repositories/usersRepository";
 import InMemoryUsersRepository from "../../repositories/inMemory/usersRepository";
-import RegisterUser from "../registerUser";
-import { UpdateUser } from "../updateUser";
+import RegisterUserService from "../registerUser";
+import { UpdateUserService } from "../updateUser";
 import { User } from "../../models/User";
-import { Message } from "../../models/Message";
+import { Message } from "@prisma/client";
+
 import { UserDidntExists } from "../../errors/UserDidntExists";
 
 let usersRepository: UsersRepository;
-let registerUser: RegisterUser;
-let updateUser: UpdateUser;
+let registerUser: RegisterUserService;
+let updateUser: UpdateUserService;
 let user: User;
 
 describe("Update User Service", async () => {
     beforeEach(async () => {
         usersRepository = new InMemoryUsersRepository();
-        registerUser = new RegisterUser(usersRepository);
-        updateUser = new UpdateUser(usersRepository);
+        registerUser = new RegisterUserService(usersRepository);
+        updateUser = new UpdateUserService(usersRepository);
         user = await usersRepository.create({
             cel: "12345678910",
             name: "John Doe",

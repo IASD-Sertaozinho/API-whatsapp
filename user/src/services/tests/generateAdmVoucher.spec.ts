@@ -1,11 +1,12 @@
-import { GenerateAdmVoucher } from "../generateAdmVoucher";
+import { GenerateAdmVoucherService } from "../generateAdmVoucher";
 import { UsersRepository } from "../../repositories/usersRepository";
 import { AdminRepository } from "../../repositories/admRepository";
 import { beforeEach, describe, expect, it } from "vitest";
 import InMemoryUsersRepository from "../../repositories/inMemory/usersRepository";
 import InMemoryAdminRepository from "../../repositories/inMemory/admRepository";
-import RegisterUser from "../registerUser";
-import { Message } from "../../models/Message";
+import RegisterUserService from "../registerUser";
+import { Message } from "@prisma/client";
+
 import UserIsntAnAdminError from "../../errors/UserIsntAnAdmin";
 import { CacheRepository } from "../../repositories/cacheRepository";
 import InMemoryCacheRepository from "../../repositories/inMemory/CacheRepository";
@@ -13,8 +14,8 @@ import { UserDidntExists } from "../../errors/UserDidntExists";
 import { UserAlreadyIsAnAdministrator } from "../../errors/UserAlreadyIsAnAdministrator";
 
 describe("GenerateAdmVoucher", () => {
-    let generateAdmVoucher: GenerateAdmVoucher;
-    let registerUser: RegisterUser;
+    let generateAdmVoucher: GenerateAdmVoucherService;
+    let registerUser: RegisterUserService;
     let usersRepository: UsersRepository;
     let adminRepository: AdminRepository;
     let cacheRepository: CacheRepository;
@@ -24,12 +25,12 @@ describe("GenerateAdmVoucher", () => {
         usersRepository = new InMemoryUsersRepository();
         adminRepository = new InMemoryAdminRepository();
         cacheRepository = new InMemoryCacheRepository();
-        generateAdmVoucher = new GenerateAdmVoucher(
+        generateAdmVoucher = new GenerateAdmVoucherService(
             usersRepository,
             adminRepository,
             cacheRepository
         );
-        registerUser = new RegisterUser(usersRepository);
+        registerUser = new RegisterUserService(usersRepository);
         adm_phone_number = "123456789";
         await registerUser.execute({
             cel: adm_phone_number,
@@ -52,7 +53,7 @@ describe("GenerateAdmVoucher", () => {
             adminNumber: adm_phone_number,
             newAdminNumber: "1234567890",
         });
-        expect(typeof response).toBe("string");
+        expect(typeof response.send).toBe("string");
     });
 
     it("should not generate a new admin voucher for an user that doesn't exists", async () => {

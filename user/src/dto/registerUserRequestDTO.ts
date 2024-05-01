@@ -1,4 +1,4 @@
-import { Message } from "../models/Message";
+import { Message } from "@prisma/client";
 
 export interface RegisterUserRequestDTO {
     name: string;

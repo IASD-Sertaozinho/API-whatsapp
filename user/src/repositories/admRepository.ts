@@ -3,8 +3,8 @@ import { Admin } from "../models/Admin";
 
 export interface AdminRepository {
     create(data: createAdminData): Promise<Admin>;
-    delete(username: string): Promise<void>;
-    findByUserNumber(number: string): Promise<Admin | undefined>;
+    delete(phone_number: string): Promise<void>;
+    findByUserNumber(number: string): Promise<Admin | null>;
 }
 export interface createAdminData {
     password: string;

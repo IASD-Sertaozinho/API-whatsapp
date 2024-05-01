@@ -4,18 +4,19 @@ import { AdminRepository } from "../../repositories/admRepository";
 import { beforeEach, describe, expect, it } from "vitest";
 import InMemoryUsersRepository from "../../repositories/inMemory/usersRepository";
 import InMemoryAdminRepository from "../../repositories/inMemory/admRepository";
-import RegisterUser from "../registerUser";
-import { Message } from "../../models/Message";
+import RegisterUserService from "../registerUser";
+import { Message } from "@prisma/client";
+
 import Hash from "../../utils/Hash";
-import AuthenticateAdm from "../authenticateAdm";
+import AuthenticateAdmService from "../authenticateAdm";
 import WrongPasswordError from "../../errors/WrongPassword";
 import { hash } from "../../app";
 import { UserDidntExists } from "../../errors/UserDidntExists";
 
 let adminRepository: AdminRepository;
 let hashFunctions: Hash;
-let authenticateAdminService: AuthenticateAdm;
-let registerUserService: RegisterUser;
+let authenticateAdminService: AuthenticateAdmService;
+let registerUserService: RegisterUserService;
 let usersRepository: UsersRepository;
 const adm_phone_number = "12345678910";
 
@@ -24,11 +25,11 @@ describe("Authenticate Adm Service", async () => {
         usersRepository = new InMemoryUsersRepository();
         hashFunctions = hash;
         adminRepository = new InMemoryAdminRepository();
-        authenticateAdminService = new AuthenticateAdm(
+        authenticateAdminService = new AuthenticateAdmService(
             adminRepository,
             hashFunctions
         );
-        registerUserService = new RegisterUser(usersRepository);
+        registerUserService = new RegisterUserService(usersRepository);
 
         await registerUserService.execute({
             cel: adm_phone_number,

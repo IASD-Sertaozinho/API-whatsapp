@@ -1,17 +1,18 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { UsersRepository } from "../../repositories/usersRepository";
 import InMemoryUsersRepository from "../../repositories/inMemory/usersRepository";
-import { Message } from "../../models/Message";
-import RegisterUser from "../registerUser";
+import { Message } from "@prisma/client";
+
+import RegisterUserService from "../registerUser";
 import { UserAlreadyExistsError } from "../../errors/UserAlreadyExistsError";
 
 let usersRepository: UsersRepository;
-let registerUser: RegisterUser;
+let registerUser: RegisterUserService;
 
 describe("Register User Service", async () => {
     beforeEach(() => {
         usersRepository = new InMemoryUsersRepository();
-        registerUser = new RegisterUser(usersRepository);
+        registerUser = new RegisterUserService(usersRepository);
     });
 
     it("should register a new user", async () => {
@@ -20,7 +21,7 @@ describe("Register User Service", async () => {
             name: "John Doe",
             message: Message.COMUM,
         });
-        expect(response).toBe(201);
+        expect(response.status).toBe(201);
     });
     it("🚨should not register a user with the same cel", async () => {
         await registerUser.execute({

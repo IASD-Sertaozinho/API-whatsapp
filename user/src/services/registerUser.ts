@@ -3,7 +3,7 @@ import { UserAlreadyExistsError } from "../errors/UserAlreadyExistsError";
 import { UsersRepository } from "../repositories/usersRepository";
 // import { Message } from "@prisma/client";
 
-export default class RegisterUser {
+export default class RegisterUserService {
     constructor(private usersRepository: UsersRepository) {}
 
     async execute(data: RegisterUserRequestDTO) {
@@ -13,6 +13,6 @@ export default class RegisterUser {
         }
         await this.usersRepository.create(data);
 
-        return 201;
+        return { status: 201 };
     }
 }

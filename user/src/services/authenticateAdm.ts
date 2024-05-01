@@ -3,7 +3,8 @@ import WrongPasswordError from "../errors/WrongPassword";
 import { AdminRepository } from "../repositories/admRepository";
 import Hash from "../utils/Hash";
 
-export default class AuthenticateAdm {
+//middleware?
+export default class AuthenticateAdmService {
     constructor(
         private adminRepository: AdminRepository,
         private hashFunctions: Hash

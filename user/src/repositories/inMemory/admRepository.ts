@@ -26,7 +26,7 @@ export default class InMemoryAdminRepository implements AdminRepository {
         this.admins.splice(index, 1);
     }
 
-    public async findByUserNumber(number: string): Promise<Admin | undefined> {
-        return this.admins.find((admin) => admin.userCel === number);
+    public async findByUserNumber(number: string): Promise<Admin | null> {
+        return this.admins.find((admin) => admin.userCel === number) || null;
     }
 }

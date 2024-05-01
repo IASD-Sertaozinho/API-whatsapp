@@ -1,44 +1,45 @@
-import { GenerateAdmVoucher } from "../generateAdmVoucher";
+import { GenerateAdmVoucherService } from "../generateAdmVoucher";
 import { UsersRepository } from "../../repositories/usersRepository";
 import { AdminRepository } from "../../repositories/admRepository";
 import { beforeEach, describe, expect, it } from "vitest";
 import InMemoryUsersRepository from "../../repositories/inMemory/usersRepository";
 import InMemoryAdminRepository from "../../repositories/inMemory/admRepository";
-import RegisterUser from "../registerUser";
-import { Message } from "../../models/Message";
+import RegisterUserService from "../registerUser";
+import { Message } from "@prisma/client";
+
 import { CacheRepository } from "../../repositories/cacheRepository";
 import InMemoryCacheRepository from "../../repositories/inMemory/CacheRepository";
-import registerAdm from "../registerAdm";
+import RegisterAdmService from "../registerAdm";
 import { hash } from "../../app";
 import InvalidVoucherError from "../../errors/InvalidVoucher";
 import { UserDidntExists } from "../../errors/UserDidntExists";
 
 describe("RegisterAdmin", () => {
-    let generateAdmVoucher: GenerateAdmVoucher;
-    let registerUser: RegisterUser;
+    let generateAdmVoucher: GenerateAdmVoucherService;
+    let registerUser: RegisterUserService;
     let usersRepository: UsersRepository;
     let adminRepository: AdminRepository;
     let cacheRepository: CacheRepository;
     let adm_phone_number: string;
-    let registerAdmin: registerAdm;
+    let registerAdmin: RegisterAdmService;
     const hashFunctions = hash;
 
     beforeEach(async () => {
         usersRepository = new InMemoryUsersRepository();
         adminRepository = new InMemoryAdminRepository();
         cacheRepository = new InMemoryCacheRepository();
-        generateAdmVoucher = new GenerateAdmVoucher(
+        generateAdmVoucher = new GenerateAdmVoucherService(
             usersRepository,
             adminRepository,
             cacheRepository
         );
-        registerAdmin = new registerAdm(
+        registerAdmin = new RegisterAdmService(
             usersRepository,
             adminRepository,
             cacheRepository,
             hashFunctions
         );
-        registerUser = new RegisterUser(usersRepository);
+        registerUser = new RegisterUserService(usersRepository);
         adm_phone_number = "123456789";
         await registerUser.execute({
             cel: adm_phone_number,
@@ -63,10 +64,10 @@ describe("RegisterAdmin", () => {
         const newAdmin = await registerAdmin.execute({
             cel: "1234567890",
             password: "123456",
-            voucher: response,
+            voucher: response.send,
         });
 
-        expect(newAdmin).toHaveProperty("id");
+        expect(newAdmin.send).toHaveProperty("id");
     });
     it("should not create a new Admin with a phone number that is not signed up", async () => {
         expect(async () => {

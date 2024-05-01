@@ -1,27 +1,17 @@
-version: '3.9'
-
 services:
-  postgres:
-    image: postgres:14-alpine
+  rabbitmq:
+    image: rabbitmq:3-management
     ports:
-      - 5432:5432
+      - "5672:5672"
+      - "15672:15672"
     volumes:
-      - ~/apps/postgres:/var/lib/postgresql/data
+      - ./rabbitmq/data:/var/lib/rabbitmq
     environment:
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_USER=admin
-      - POSTGRES_DB=user
-
-  redis:  
-    image: redis:7.0-alpine
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
     restart: always
-    ports:
-      - 6379:6379
-    volumes:
-      - /path/to/local/dаta:/root/redis
-      - /path/to/local/redis.conf:/usr/local/etc/redis/redis.conf
-    environment:
-      - REDIS_PASSWORD=1234
-      - REDIS_PORT=6379
-      - REDIS_DATABASES=16
 
+volumes:
+  logs-folder:
+    name: ${log_rabbitmq_management}
+    driver: local

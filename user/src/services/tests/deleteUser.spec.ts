@@ -1,17 +1,18 @@
 import InMemoryUsersRepository from "../../repositories/inMemory/usersRepository";
 import { UsersRepository } from "../../repositories/usersRepository";
-import DeleteUser from "../deleteUser";
-import { Message } from "../../models/Message";
+import DeleteUserService from "../deleteUser";
+// import { Message } from "../../models/Message";
 import { describe, beforeEach, expect, it } from "vitest";
 import { UserDidntExists } from "../../errors/UserDidntExists";
+import { Message } from "@prisma/client";
 
 let usersRepository: UsersRepository;
-let deleteUser: DeleteUser;
+let deleteUser: DeleteUserService;
 
 describe("Delete User Service", async () => {
     beforeEach(() => {
         usersRepository = new InMemoryUsersRepository();
-        deleteUser = new DeleteUser(usersRepository);
+        deleteUser = new DeleteUserService(usersRepository);
     });
     it("should be able to delete an user", async () => {
         await usersRepository.create({
