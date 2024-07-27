@@ -1,4 +1,4 @@
-from src.services.get_backup_meditation import GetBackupMeditation
+from services.get_backup_meditation import GetBackupMeditation
 
 
 class TestGetBackupMeditation:

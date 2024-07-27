@@ -13,11 +13,11 @@ class EntryPoint:
     def process_message(self, ch, method, properties, body):
         print(body)
         if body == b'get_common_meditation':
-            self.__url = ""
+            self.__url = "https://mais.cpb.com.br/meditacoes-diarias/"
         elif body == b'get_woman_meditation':
-            self.__url = ""
+            self.__url = "https://mais.cpb.com.br/meditacao-da-mulher-2/"
         elif body == b'get_yong_meditation':
-            self.__url = ""
+            self.__url = "https://mais.cpb.com.br/meditacao-jovem/"
         else: 
             print("Invalid message")
             return

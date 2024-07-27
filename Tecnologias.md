@@ -3,7 +3,6 @@
 ### API
 
 - Python - Flask
-- Java - Spring Boot
 
 ## Banco de Dados
 - Postgresql
