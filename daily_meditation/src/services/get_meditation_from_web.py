@@ -29,7 +29,7 @@ class GetMeditationFromWeb:
 
         """
 
-        response = requests.get(url)
+        response = requests.get(url, verify=False)
         html_content = response.text
 
         # Parse HTML content
@@ -44,6 +44,7 @@ class GetMeditationFromWeb:
         # Extract Image
         image = soup.find('div', class_=IMAGE_CLASS)
 
+
         if(image is None or text_title is None or text_body is None):
             raise ValueError("Invalid URL")
 
@@ -55,11 +56,11 @@ class GetMeditationFromWeb:
         # If any of the elements are missing, raise an error
         if(image is None or text_title is None or text_body is None):
             raise ValueError("Invalid URL")
-        
+
         day_week = datetime.today().weekday()
         name_day_week = calendar.day_name[day_week]
 
-        
+
         meditation = DailyMeditation(text_title.get_text(), image_link, text_body.get_text().strip(), name_day_week)
 
 

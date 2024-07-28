@@ -1,11 +1,12 @@
 from services.get_meditation_from_web import GetMeditationFromWeb
 from services.get_backup_meditation import GetBackupMeditation
-from utils.rabbitmq import Rabbitmq
+from utils.rabbitmq import RabbitmqConsumer, RabbitmqProducer
 
 
 class EntryPoint:
     def __init__(self, get_backup_meditation: GetBackupMeditation, get_meditation_from_web: GetMeditationFromWeb):
-        self.__rabbitmq = Rabbitmq(self.process_message)
+        self.__rabbitmq_consumer = RabbitmqConsumer(self.process_message)
+        self.__rabbitmq_producer = RabbitmqProducer()
         self.__get_backup_meditation = get_backup_meditation
         self.__get_meditation_from_web = get_meditation_from_web
         self.__url: str = ""
@@ -18,18 +19,14 @@ class EntryPoint:
             self.__url = "https://mais.cpb.com.br/meditacao-da-mulher-2/"
         elif body == b'get_yong_meditation':
             self.__url = "https://mais.cpb.com.br/meditacao-jovem/"
-        else: 
+        else:
             print("Invalid message")
             return
         try:
             message = self.__get_meditation_from_web.execute(self.__url)
         except ValueError:
             message = self.__get_backup_meditation.get_message()
-        self.__rabbitmq.publish((str(message)))
+        self.__rabbitmq_producer.publish((str(message)))
 
     def start(self):
-        self.__rabbitmq.consuming()
-
-
-
-
+        self.__rabbitmq_consumer.consuming()
